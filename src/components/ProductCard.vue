@@ -58,8 +58,8 @@ export default {
 }
 
 .custom-button {
-  background-color: #22c55e!important;
-  border-color: #22c55e !important;
-  color: #fff !important;
+  background-color: #22c55e;
+  border-color: #22c55e ;
+  color: #fff ;
 }
 </style>

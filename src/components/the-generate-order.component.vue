@@ -1,33 +1,35 @@
 <template>
-  <div class="p-fluid p-formgrid p-grid">
-    <div class="p-field p-col-12 p-md-4">
-      <label for="product">Producto</label>
-      <Dropdown id="product" v-model="order.product" :options="products" optionLabel="name" placeholder="Selecciona un producto"/>
-    </div>
-    <div class="p-field p-col-12 p-md-4">
-      <label for="quantity">Cantidad</label>
-      <InputNumber id="quantity" v-model="order.quantity" :min="1" :max="500"/>
-    </div>
-    <div class="p-field p-col-12 p-md-4">
-      <label for="price">Precio (Soles)</label>
-      <InputNumber id="price" v-model="order.price" :min="100" :max="10000" mode="currency" currency="PEN" locale="es-PE"/>
-    </div>
-    <div class="p-field p-col-12 p-md-4">
-      <label for="phone">Teléfono</label>
-      <InputText id="phone" v-model="order.phone" type="tel" maxlength="9"/>
-    </div>
-    <div class="p-col-12">
-      <Button label="Generar Pedido" @click="generateOrder"/>
+  <div class="container">
+    <div class="p-fluid p-formgrid p-grid form-container">
+      <div class="p-field p-col-12 p-md-4">
+        <label for="product">Producto</label>
+        <Dropdown id="product" v-model="order.product" :options="products" optionLabel="producto" placeholder="Selecciona un producto"/>
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label for="quantity">Cantidad</label>
+        <InputNumber id="quantity" v-model="order.quantity" :min="1" :max="500"/>
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label for="price">Precio (Soles)</label>
+        <InputNumber id="price" v-model="order.price" :min="100" :max="10000" mode="currency" currency="PEN" locale="es-PE"/>
+      </div>
+      <div class="p-field p-col-12 p-md-4">
+        <label for="phone">Teléfono</label>
+        <InputText id="phone" v-model="order.phone" type="tel" maxlength="9"/>
+      </div>
+      <div class="p-col-12">
+        <Button label="Generar Pedido" class="generate-order-button" @click="generateOrder"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import { Dropdown } from 'primevue/dropdown';
-import { InputNumber } from 'primevue/inputnumber';
-import { InputText } from 'primevue/inputtext';
-import { Button } from 'primevue/button';
+import { ref } from 'vue';
+import Dropdown from 'primevue/dropdown';
+import InputNumber from 'primevue/inputnumber';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 import axios from 'axios';
 
 export default {
@@ -47,14 +49,9 @@ export default {
 
     const products = ref([]);
 
-    onMounted(async () => {
-      const response = await axios.get('/path/to/db.json');
-      products.value = response.data.products;
-    });
-
     const generateOrder = async () => {
       if (validateOrder(order.value)) {
-        await axios.post('/path/to/db.json/orders', order.value);
+        await axios.post('http://localhost:3000/orders', order.value);
         alert('Pedido generado exitosamente');
       } else {
         alert('Por favor, complete todos los campos correctamente');
@@ -75,8 +72,26 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.form-container {
+  max-width: 600px;
+  width: 100%;
+}
+
 .p-fluid {
   margin: 0 auto;
-  padding: 2rem;
+}
+
+
+.generate-order-button {
+  background-color: #22c55e ;
+  border-color: #22c55e ;
+  color: #fff ;
 }
 </style>
