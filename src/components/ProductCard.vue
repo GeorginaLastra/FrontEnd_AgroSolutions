@@ -1,25 +1,27 @@
 <template>
   <Card>
     <template #title>
-      {{ product.name }}
+      {{ product.producto }}
     </template>
     <template #content>
-      <p>Antigüedad: {{ product.age }} años</p>
-      <p>Cantidad mínima: {{ product.minQuantity }} costales</p>
-      <p>Cantidad máxima: {{ product.maxQuantity }} costales</p>
-      <p>Número de ventas: {{ product.sales }}</p>
+
+      <p><strong>Antigüedad:</strong> {{ product.antiguedad }} años</p>
+      <p><strong>Cantidad mínima:</strong> {{ product.cantidad_minima }} costales</p>
+      <p><strong>Cantidad máxima:</strong> {{ product.cantidad_maxima }} costales</p>
+      <p><strong>Número de ventas:</strong> {{ product.numero_ventas }}</p>
     </template>
     <template #footer>
-      <Button label="Generar pedido" icon="pi pi-shopping-cart" @click="generateOrder" />
-      <Button label="Agregar a favoritos" icon="pi pi-star" @click="addToFavorites" />
-      <Button label="No recomendar" icon="pi pi-ban" @click="doNotRecommend" />
+
+      <Button label="Generar pedido" icon="pi pi-shopping-cart" class="mr-2 custom-button" @click="generateOrder" />
+      <Button label="Agregar a favoritos" icon="pi pi-star" class="mr-2 custom-button" @click="addToFavorites" />
+      <Button label="No recomendar" icon="pi pi-ban" class="custom-button" @click="doNotRecommend" />
     </template>
   </Card>
 </template>
 
 <script>
-import { Card } from 'primevue/card';
-import { Button } from 'primevue/button';
+import Card from 'primevue/card';
+import Button from 'primevue/button';
 
 export default {
   name: 'ProductCard',
@@ -35,17 +37,29 @@ export default {
       this.$router.push({ name: 'TheGenerateOrder', params: { productId: this.product.id } });
     },
     addToFavorites() {
-      alert(`${this.product.name} agregado a favoritos`);
+      alert(`${this.product.producto} agregado a favoritos`);
     },
     doNotRecommend() {
-      alert(`No recomendar ${this.product.name}`);
+      alert(`No recomendar ${this.product.producto}`);
     }
   }
 }
 </script>
 
 <style scoped>
-.p-card {
-  margin: 20px;
+
+.p-card-footer .p-button {
+  margin-right: 8px;
+}
+
+
+.p-card-content p strong {
+  font-weight: bold;
+}
+
+.custom-button {
+  background-color: #22c55e!important;
+  border-color: #22c55e !important;
+  color: #fff !important;
 }
 </style>
